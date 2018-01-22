@@ -97,4 +97,6 @@ val lrFitted = logisticRegModel.fit(training)
 
 // Test the Model
 val holdout = lrFitted.transform(test)
-holdout.show()
+val holdoutResult = holdout.selectExpr("id", "prediction", "click_output")
+holdoutResult.cache()
+val ranked = holdoutResult.select(holdoutResult("prediction").gt(0.0))
