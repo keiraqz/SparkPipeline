@@ -103,3 +103,7 @@ val ranked = holdoutResult.filter(holdoutResult("prediction").between(0.1, 0.9))
 
 // Save the Pipeline
 lrFitted.write.save("./lrModelPipeline")
+
+// load the Model. Notice that you need to use LogisticRegressionModel instead of LogisticRegression
+import org.apache.spark.ml.classification.LogisticRegressionModel
+val lrFitted = LogisticRegressionModel.load("./Spark/lrModelPipeline")
