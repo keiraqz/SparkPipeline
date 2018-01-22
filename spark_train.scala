@@ -99,4 +99,7 @@ val lrFitted = logisticRegModel.fit(training)
 val holdout = lrFitted.transform(test)
 val holdoutResult = holdout.selectExpr("id", "prediction", "click_output")
 holdoutResult.cache()
-val ranked = holdoutResult.select(holdoutResult("prediction").gt(0.0))
+val ranked = holdoutResult.filter(holdoutResult("prediction").between(0.1, 0.9))
+
+// Save the Pipeline
+lrFitted.write.save("./lrModelPipeline")
